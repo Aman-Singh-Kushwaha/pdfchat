@@ -1,16 +1,16 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from app.core.config import settings
+from app.core.logger import logger
 
-app = FastAPI(title="PDF Chat Backend", version="0.1.0")
+app = FastAPI(title=settings.PROJECT_NAME, version=settings.VERSION)
 
-# Allow CORS for all origins
-origins = [
-  "http://localhost:3000",
-]
+# Allow CORS for localhost origin
+
 app.add_middleware(
   CORSMiddleware,
-  allow_origins=origins,
+  allow_origins=settings.CORS_ORIGINS,
   allow_credentials=True,
   allow_methods=["*"],
   allow_headers=["*"],

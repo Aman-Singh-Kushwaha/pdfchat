@@ -1,8 +1,2 @@
-
-# FastAPI Backend
-.venv
-__pycache__/
-
-
-# Environment Variables
-.env
+# Docs
+Backend_Implementation_Plan.md

@@ -1,13 +1,22 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
+from sqlalchemy.orm import Session
 
 from app.core.config import settings
 from app.core.logger import logger
+from app.db.session import Base, engine, get_db
 
 app = FastAPI(title=settings.PROJECT_NAME, version=settings.VERSION)
 
-# Allow CORS for localhost origin
+@app.on_event("startup")
+async def init_db():
+  try:
+    Base.metadata.create_all(bind=engine)
+  except Exception as e:
+    logger.error(f"Error creating database tables: {e}")
+    raise e
 
+# Allow CORS for localhost origin
 app.add_middleware(
   CORSMiddleware,
   allow_origins=settings.CORS_ORIGINS,
@@ -19,3 +28,19 @@ app.add_middleware(
 @app.get("/", status_code=200)
 async def root():
   return {"message": "PDF Chat API is working!", "status":"success"}
+
+@app.get("/health", status_code=200)
+async def health_check(db: Session = Depends(get_db)):
+  try:
+    from sqlalchemy import text
+    db.execute(text('SELECT 1'))
+    return {
+      "status": "healthy",
+      "database": "connected"
+    }
+  except Exception as e:
+    logger.error(f"Database health check failed: {e}")
+    return {
+      "status": "unhealthy",
+      "database": "disconnected"
+    }

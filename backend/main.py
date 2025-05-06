@@ -5,6 +5,7 @@ from sqlalchemy.orm import Session
 from app.core.config import settings
 from app.core.logger import logger
 from app.db.session import Base, engine, get_db
+from app.api.v1.router import router as api_router
 
 app = FastAPI(title=settings.PROJECT_NAME, version=settings.VERSION)
 
@@ -25,6 +26,11 @@ app.add_middleware(
   allow_headers=["*"],
 )
 
+# Include API router
+app.include_router(api_router, prefix=settings.API_V1_PREFIX)
+
+
+# Root Testing endpoints
 @app.get("/", status_code=200)
 async def root():
   return {"message": "PDF Chat API is working!", "status":"success"}

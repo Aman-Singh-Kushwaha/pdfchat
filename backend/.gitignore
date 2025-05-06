@@ -10,3 +10,6 @@ __pycache__/
 # Loguru Dev logs
 logs/
 *.log
+
+# Local File Storage
+storage/

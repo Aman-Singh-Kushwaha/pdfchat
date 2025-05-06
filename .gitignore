@@ -1,0 +1,8 @@
+
+# FastAPI Backend
+.venv
+__pycache__/
+
+
+# Environment Variables
+.env

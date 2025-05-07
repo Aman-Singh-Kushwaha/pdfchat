@@ -1,8 +1,7 @@
 from fastapi import APIRouter, UploadFile, File, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
-import os 
-from datetime import datetime
+import os
 
 from app.core.config import settings
 from app.core.logger import logger
@@ -28,6 +27,10 @@ async def upload_file(
   if not file.filename.endswith('.pdf'):
     raise HTTPException(status_code=400, detail="Only PDF files are allowed")
   
+  # file size (50MB limit)
+  if file.size > 50 * 1024 * 1024:
+    raise HTTPException(status_code=400, detail="File size cannot exceed 50MB")
+    
   try:
     # Creates dir if not exists on env upload dir path
     upload_dir = settings.create_upload_dir()
@@ -42,17 +45,18 @@ async def upload_file(
     document = Document(
       filename=file.filename,
       file_path=str(file_path),
-      added_at=datetime.utcnow()
     )
-    
+
     db.add(document)
     db.commit()
     db.refresh(document)
     
-    logger.info(f"Document uploaded successfully: {document.filename}")
+    logger.info(f"Document processed successfully: {document.filename}")
     return document
   
   except Exception as e:
-    logger.error(f"Error uploading document: {e}")
+    logger.exception(f"Error processing document: {e}")
+    if file_path.exists():
+      file_path.unlink()
+    db.rollback()
     raise HTTPException(status_code=500, detail=str(e))
-

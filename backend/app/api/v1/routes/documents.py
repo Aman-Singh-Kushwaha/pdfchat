@@ -8,6 +8,7 @@ from app.core.logger import logger
 from app.db.session import get_db
 from app.models.document import Document
 from app.schemas.document import DocumentResponse
+from app.utils.document_processor import process_pdf_index
 
 router = APIRouter()
 
@@ -46,6 +47,12 @@ async def upload_file(
       filename=file.filename,
       file_path=str(file_path),
     )
+
+    # Process PDF and create embeddings
+    try:
+      await process_pdf_index(file_path, settings.DATABASE_URL)
+    except Exception as e:
+      logger.error(f"PDF processing failed {e}")
 
     db.add(document)
     db.commit()

@@ -24,7 +24,7 @@ class Settings(BaseSettings):
   DATABASE_URL: str = os.getenv("DATABASE_URL")
   UPLOAD_DIR: str = os.getenv("UPLOAD_DIR")
 
-
+  DEEPSEEK_API_KEY:str = os.getenv("DEEPSEEK_API_KEY")
   class Config:
     env_file = ".env"
     case_sensitive = True

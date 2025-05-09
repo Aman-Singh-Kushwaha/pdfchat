@@ -14,10 +14,11 @@ class Settings(BaseSettings):
   PROJECT_NAME: str = "PDF Chat Backend"
   VERSION: str = "1.0.0"
 
+  FRONTEND_APP: str | None = os.getenv("FRONTEND_APP")
   CORS_ORIGINS: List[str] = [
     "http://localhost:5173",
     "http://localhost:4173",
-  ]
+  ] + ([FRONTEND_APP] if FRONTEND_APP else [])
   
   LOG_LEVEL: str = os.getenv("LOG_LEVEL")
   

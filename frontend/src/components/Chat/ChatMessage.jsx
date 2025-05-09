@@ -9,7 +9,7 @@ const ChatMessage = ({
   return (
     <Box sx={{
         display: 'flex',
-        gap: 2,
+        gap: 1,
         alignItems: 'flex-start',
       }}
     >
@@ -26,7 +26,7 @@ const ChatMessage = ({
       {content ? (
         <Box sx={{
             maxWidth: '80%', 
-            p: 2,
+            p: 1,
             whiteSpace: 'pre-wrap',
             wordBreak: 'break-word'
           }}

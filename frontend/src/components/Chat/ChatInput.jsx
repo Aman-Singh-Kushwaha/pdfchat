@@ -25,6 +25,7 @@ const ChatInput = ({ onSend, isLoading }) => {
         pt: { xs: 1, sm: 2 },
         maxWidth: isMobile ? '100%' : '800px',
         mx: 'auto',
+        bgcolor: 'background.primary',
         width: '100%'
       }}
     >

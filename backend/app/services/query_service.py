@@ -32,7 +32,7 @@ async def query_document(user_query: str, db_conn_str: str) -> str:
     )
 
     llm = OpenAI(
-      model='gpt-4',  # Using GPT-4 for better reasoning
+      model='gpt-4o-mini',
       api_key=envConfig.OPENAI_API_KEY
     )
 

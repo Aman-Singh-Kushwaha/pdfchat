@@ -12,4 +12,3 @@ llama-index-core==0.12.35
 llama-index-llms-openai==0.3.38
 llama-index-embeddings-openai==0.3.1
 llama-index-vector-stores-postgres==0.5.2
-sentence-transformers==4.1.0

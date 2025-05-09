@@ -1,11 +1,13 @@
 import { Box, Avatar } from '@mui/material'
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import aiPlanetAvatar from '../../assets/aiplanet_avatar.png'
+import ChatLoaderAnimation from '../../assets/chat_loader.gif'
 
-const ChatMessage = ({ content, isUser }) => {
+const ChatMessage = ({ 
+  content = null, 
+  isUser = false
+}) => {
   return (
-    <Box
-      sx={{
+    <Box sx={{
         display: 'flex',
         gap: 2,
         alignItems: 'flex-start',
@@ -21,18 +23,21 @@ const ChatMessage = ({ content, isUser }) => {
       >
         {isUser ? 'U' : null}
       </Avatar>
-      <Box
-        sx={{
-          maxWidth: '80%',
-          p: 2,
-          bgcolor: isUser ? 'grey.100' : 'white',
-          borderRadius: 2,
-          whiteSpace: 'pre-wrap',
-          wordBreak: 'break-word'
-        }}
-      >
-        {content}
-      </Box>
+      {content ? (
+        <Box sx={{
+            maxWidth: '80%', 
+            p: 2,
+            bgcolor: isUser ? 'grey.100' : 'white',
+            borderRadius: 2,
+            whiteSpace: 'pre-wrap',
+            wordBreak: 'break-word'
+          }}
+        >
+          {content}
+        </Box>
+      ) : (
+        <img src={ChatLoaderAnimation} alt="Loading..." style={{ maxHeight: '32px' }} />
+      )}
     </Box>
   )
 }

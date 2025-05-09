@@ -29,11 +29,25 @@ const Chat = () => {
 
   const handleSendMessage = async (query) => {
     try {
+      // Added Intial UserQuery to UI
+      const tempId = crypto.randomUUID()
+      const userMessage = { id: tempId, query}
+      setMessages(prev => [...prev, userMessage])
+
       setIsLoading(true)
-      const response = await sendChatMessage(id, query)
-      setMessages(prev => [...prev, response])
+      const aiResponse = await sendChatMessage(id, query)
+
+      setMessages(prev => prev.map(msg => 
+        msg.id === tempId ? 
+          { ...msg, id: aiResponse.id, response: aiResponse.response }  // Updatig temp message with real ID
+          : msg
+      )) 
     } catch (error) {
       console.error('Failed to send message:', error)
+      setMessages(prev => prev.map(msg => msg.id === tempId) ?
+        {...msg, response: `Error: ${error.message || 'Failed to get response'}`}
+        : msg
+      )
     } finally {
       setIsLoading(false)
     }
@@ -62,11 +76,10 @@ const Chat = () => {
         }}
       >
         {messages.map((msg) => (
-          <ChatMessage
-            key={msg.id}
-            content={msg.query || msg.response}
-            isUser={Boolean(msg.query)}
-          />
+          <div key={msg.id}>
+            <ChatMessage content={msg.query} isUser={true}/>
+            <ChatMessage content={msg.response} />
+          </div>
         ))}
       </Box>
       <ChatInput onSend={handleSendMessage} isLoading={isLoading} />

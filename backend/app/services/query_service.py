@@ -6,9 +6,9 @@ from llama_index.vector_stores.postgres import PGVectorStore
 from llama_index.embeddings.huggingface import HuggingFaceEmbedding
 from llama_index.llms.openai import OpenAI
 
-from app.core.config import settings as envConfig
+from app.utils.config import settings as envConfig
 
-from app.core.logger import logger
+from app.utils.logger import logger
 
 async def query_document(user_query: str, db_conn_str: str) -> str:
   try:

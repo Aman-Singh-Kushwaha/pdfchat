@@ -1,8 +1,8 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, DeclarativeBase
 
-from app.core.config import settings
-from app.core.logger import logger
+from app.utils.config import settings
+from app.utils.logger import logger
 
 # SQLAlchemy engine
 engine = create_engine(

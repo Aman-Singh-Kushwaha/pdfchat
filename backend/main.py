@@ -2,8 +2,8 @@ from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 
-from app.core.config import settings
-from app.core.logger import logger
+from app.utils.config import settings
+from app.utils.logger import logger
 from app.db.session import Base, engine, get_db
 from app.api.v1.router import router as api_router
 

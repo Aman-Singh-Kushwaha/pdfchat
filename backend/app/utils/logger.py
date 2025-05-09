@@ -2,7 +2,7 @@ import logging
 import sys
 from pathlib import Path
 from loguru import logger
-from app.core.config import settings
+from app.utils.config import settings
 
 # Create logs directory
 LOG_DIR = Path("logs")

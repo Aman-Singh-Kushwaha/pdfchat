@@ -7,7 +7,7 @@ from llama_index.embeddings.huggingface import HuggingFaceEmbedding
 from llama_index.core import VectorStoreIndex, StorageContext, Settings
 from llama_index.vector_stores.postgres import PGVectorStore
 
-from app.core.logger import logger
+from app.utils.logger import logger
 
 async def extract_document(doc_path:Path):
   """ Extracts PDF data using PymuPDF4llm """    

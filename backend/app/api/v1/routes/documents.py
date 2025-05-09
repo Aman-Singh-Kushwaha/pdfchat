@@ -3,12 +3,12 @@ from sqlalchemy.orm import Session
 from typing import List
 import os
 
-from app.core.config import settings
-from app.core.logger import logger
+from app.utils.config import settings
+from app.utils.logger import logger
 from app.db.session import get_db
 from app.models.document import Document
 from app.schemas.document import DocumentResponse
-from app.utils.document_processor import process_pdf_index
+from app.services.document_processor import process_pdf_index
 
 router = APIRouter()
 

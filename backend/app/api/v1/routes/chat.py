@@ -3,12 +3,12 @@ from sqlalchemy.orm import Session
 from typing import List
 from uuid import UUID
 
-from app.core.config import settings
-from app.core.logger import logger
+from app.utils.config import settings
+from app.utils.logger import logger
 from app.db.session import get_db
 from app.models.chat import ChatSession, ChatMessage
 from app.schemas.chat import ChatQuery, ChatResponse
-from app.utils.query_service import query_document
+from app.services.query_service import query_document
 
 router = APIRouter()
 

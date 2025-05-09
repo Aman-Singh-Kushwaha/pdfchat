@@ -32,28 +32,23 @@ async def upload_file(
   if file.size > 50 * 1024 * 1024:
     raise HTTPException(status_code=400, detail="File size cannot exceed 50MB")
     
+  file_path = None
   try:
     # Creates dir if not exists on env upload dir path
     upload_dir = settings.create_upload_dir()
-    
     file_path = upload_dir / file.filename
     
     content = await file.read()
     with open(file_path, "wb") as f:
       f.write(content)
     
-    # Create file metadata & save to DB
+    # Process PDF and create embeddings
+    await process_pdf_index(file_path, settings.DATABASE_URL)
+
     document = Document(
       filename=file.filename,
       file_path=str(file_path),
     )
-
-    # Process PDF and create embeddings
-    try:
-      await process_pdf_index(file_path, settings.DATABASE_URL)
-    except Exception as e:
-      logger.error(f"PDF processing failed {e}")
-
     db.add(document)
     db.commit()
     db.refresh(document)
@@ -62,8 +57,9 @@ async def upload_file(
     return document
   
   except Exception as e:
-    logger.exception(f"Error processing document: {e}")
-    if file_path.exists():
+    # Clean up on any error
+    if file_path and file_path.exists():
       file_path.unlink()
     db.rollback()
+    logger.exception(f"Error processing document: {e}")
     raise HTTPException(status_code=500, detail=str(e))

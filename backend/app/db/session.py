@@ -24,6 +24,6 @@ def get_db():
   try:
     yield db
   except Exception as e:
-    logger.error(f"Error in database session: {e}")
+    raise e
   finally:
     db.close()

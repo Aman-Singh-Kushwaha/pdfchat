@@ -3,7 +3,7 @@ from sqlalchemy import make_url
 from fastapi import HTTPException
 from llama_index.core import StorageContext, VectorStoreIndex, Settings
 from llama_index.vector_stores.postgres import PGVectorStore
-from llama_index.embeddings.huggingface import HuggingFaceEmbedding
+from llama_index.embeddings.openai import OpenAIEmbedding
 from llama_index.llms.openai import OpenAI
 
 from app.utils.config import settings as envConfig
@@ -21,18 +21,19 @@ async def query_document(user_query: str, db_conn_str: str) -> str:
       port=url.port,
       user=url.username,
       table_name = "document_vectors",
-      embed_dim = 384
+      embed_dim = 1536
     )
     storage_context = StorageContext.from_defaults(vector_store = pgvector_store)
 
-    # Configure model for query
-    embed_model = HuggingFaceEmbedding(
-      model_name="sentence-transformers/all-MiniLM-L6-v2"
+    # Switch to OpenAI embeddings
+    embed_model = OpenAIEmbedding(
+      api_key=envConfig.OPENAI_API_KEY,
+      model="text-embedding-3-small",
     )
 
     llm = OpenAI(
-      model='gpt-4o-mini',
-      api_key= envConfig.DEEPSEEK_API_KEY
+      model='gpt-4',  # Using GPT-4 for better reasoning
+      api_key=envConfig.OPENAI_API_KEY
     )
 
     Settings.llm = llm

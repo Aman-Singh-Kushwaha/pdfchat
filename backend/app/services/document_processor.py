@@ -3,11 +3,12 @@
 from pathlib import Path
 from sqlalchemy import make_url
 from pymupdf4llm import LlamaMarkdownReader
-from llama_index.embeddings.huggingface import HuggingFaceEmbedding
+from llama_index.embeddings.openai import OpenAIEmbedding  # Change import
 from llama_index.core import VectorStoreIndex, StorageContext, Settings
 from llama_index.vector_stores.postgres import PGVectorStore
 
 from app.utils.logger import logger
+from app.utils.config import settings as envConfig
 
 async def extract_document(doc_path:Path):
   """ Extracts PDF data using PymuPDF4llm """    
@@ -21,7 +22,7 @@ async def process_pdf_index(file_path: Path, db_conn_str: str):
     extracted_data = await extract_document(file_path)
     logger.info(f"Data Extraction completed for file at: {file_path}")
 
-    # Postgres VectorDB Table connection storing index
+    # Postgres VectorDB connection
     url = make_url(db_conn_str)
     pgvector_store = PGVectorStore.from_params(
       database=url.database,
@@ -30,13 +31,15 @@ async def process_pdf_index(file_path: Path, db_conn_str: str):
       port=url.port,
       user=url.username,
       table_name = "document_vectors",
-      embed_dim = 384
+      embed_dim = 1536  # OpenAI embedding dimension
     )
     storage_context = StorageContext.from_defaults(vector_store = pgvector_store)
 
     # Service context for embedding generation
-    Settings.embed_model = HuggingFaceEmbedding(
-      model_name="sentence-transformers/all-MiniLM-L6-v2"
+    Settings.embed_model = OpenAIEmbedding(
+      api_key=envConfig.OPENAI_API_KEY,
+      model="text-embedding-3-small",
+      embed_batch_size=20
     )
 
     index = VectorStoreIndex.from_documents(

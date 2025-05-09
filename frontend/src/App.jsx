@@ -1,6 +1,9 @@
 import { Box, Typography, useTheme, useMediaQuery } from '@mui/material'
+import { Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import FileUploadDialog from './components/FileUploadDialog'
+import DocumentsList from './components/DocumentsList'
+// import Chat from './components/Chat'
 import { useApp } from './context/AppContext'
 
 function App() {
@@ -9,7 +12,8 @@ function App() {
     isUploadOpen, 
     handleUploadClick, 
     handleUploadClose, 
-    handleUploadSuccess 
+    handleUploadSuccess,
+    isLoading 
   } = useApp()
   
   const theme = useTheme()
@@ -23,22 +27,11 @@ function App() {
         isMobile={isMobile}
       />
 
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          height: 'calc(100% - 64px)',
-          p: 3
-        }}
-      >
-        <Typography variant="h4" component="h1" gutterBottom>
-          Welcome to PDF Chat
-        </Typography>
-        <Typography variant="body1" color="text.secondary" align="center">
-          Upload your PDF documents and start chatting with them
-        </Typography>
+      <Box sx={{ p: 3 }}>
+        <Routes>
+          <Route path="/" element={<DocumentsList />} />
+          {/* <Route path="/chat/:id" element={<Chat />} /> */}
+        </Routes>
       </Box>
 
       <FileUploadDialog 

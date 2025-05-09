@@ -5,19 +5,22 @@ import {
   DialogContent, 
   Box, 
   Typography,
-  IconButton
+  IconButton,
+  CircularProgress
 } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 import { useDropzone } from 'react-dropzone'
+import { useApp } from '../context/AppContext'
 
-const FileUploadDialog = ({ open, onClose, onUploadSuccess }) => {
+const FileUploadDialog = ({ open, onClose }) => {
+  const { handleUploadSuccess, isLoading } = useApp()
+
   const onDrop = useCallback((acceptedFiles) => {
     const file = acceptedFiles[0]
-    if(file){
-      // TODO: backend file upload left to do
-      onUploadSuccess(file)
+    if (file) {
+      handleUploadSuccess(file)
     }
-  }, [onUploadSuccess ])
+  }, [handleUploadSuccess])
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
@@ -35,35 +38,42 @@ const FileUploadDialog = ({ open, onClose, onUploadSuccess }) => {
         <IconButton
           onClick={onClose}
           sx={{ position: 'absolute', right: 8, top: 8 }}
+          disabled={isLoading}
         >
           <CloseIcon />
         </IconButton>
       </DialogTitle>
       <DialogContent>
-        <Box
-          {...getRootProps()}
-          sx={{
-            border: '2px dashed #0FA958',
-            borderRadius: 2,
-            p: 3,
-            textAlign: 'center',
-            cursor: 'pointer',
-            bgcolor: isDragActive ? 'action.hover' : 'background.paper',
-            '&:hover': {
-              bgcolor: 'action.hover'
-            }
-          }}
-        >
-          <input {...getInputProps()} />
-          <Typography variant="body1" gutterBottom>
-            {isDragActive
-              ? 'Drop the PDF here'
-              : 'Drag & drop a PDF file here, or click to select'}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Maximum file size: 50MB
-          </Typography>
-        </Box>
+        {isLoading ? (
+          <Box sx={{ display: 'flex', justifyContent: 'center', p: 3 }}>
+            <CircularProgress />
+          </Box>
+        ) : (
+          <Box
+            {...getRootProps()}
+            sx={{
+              border: '2px dashed #0FA958',
+              borderRadius: 2,
+              p: 3,
+              textAlign: 'center',
+              cursor: 'pointer',
+              bgcolor: isDragActive ? 'action.hover' : 'background.paper',
+              '&:hover': {
+                bgcolor: 'action.hover'
+              }
+            }}
+          >
+            <input {...getInputProps()} />
+            <Typography variant="body1" gutterBottom>
+              {isDragActive
+                ? 'Drop the PDF here'
+                : 'Drag & drop a PDF file here, or click to select'}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              Maximum file size: 50MB
+            </Typography>
+          </Box>
+        )}
       </DialogContent>
     </Dialog>
   )

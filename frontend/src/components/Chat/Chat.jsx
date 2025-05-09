@@ -28,12 +28,11 @@ const Chat = () => {
   }, [id])
 
   const handleSendMessage = async (query) => {
+    // Added Intial UserQuery to UI
+    const tempId = crypto.randomUUID()
+    const userMessage = { id: tempId, query}
+    setMessages(prev => [...prev, userMessage])
     try {
-      // Added Intial UserQuery to UI
-      const tempId = crypto.randomUUID()
-      const userMessage = { id: tempId, query}
-      setMessages(prev => [...prev, userMessage])
-
       setIsLoading(true)
       const aiResponse = await sendChatMessage(id, query)
 

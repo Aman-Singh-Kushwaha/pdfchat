@@ -18,7 +18,7 @@ async def query_document(user_query: str, db_conn_str: str) -> str:
       database=url.database,
       host=url.host,
       password=url.password,
-      port=url.port,
+      port=url.port or 5432,
       user=url.username,
       table_name = "document_vectors",
       embed_dim = 1536

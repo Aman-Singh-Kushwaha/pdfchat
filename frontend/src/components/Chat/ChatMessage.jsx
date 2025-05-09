@@ -27,8 +27,6 @@ const ChatMessage = ({
         <Box sx={{
             maxWidth: '80%', 
             p: 2,
-            bgcolor: isUser ? 'grey.100' : 'white',
-            borderRadius: 2,
             whiteSpace: 'pre-wrap',
             wordBreak: 'break-word'
           }}

@@ -4,3 +4,8 @@ Backend_Implementation_Plan.md
 # IDE
 .vscode/
 settings.json
+
+# Env
+.env
+.env.*
+!.env.example

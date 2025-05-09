@@ -6,8 +6,12 @@ from app.utils.config import settings
 from app.utils.logger import logger
 from app.db.session import Base, engine, get_db
 from app.api.v1.router import router as api_router
+from fastapi.middleware.httpsredirect import HTTPSRedirectMiddleware
 
 app = FastAPI(title=settings.PROJECT_NAME, version=settings.VERSION)
+
+# forces HTTPS redirect in railway deployment, (comment in local development)
+app.add_middleware(HTTPSRedirectMiddleware)
 
 @app.on_event("startup")
 async def init_db():

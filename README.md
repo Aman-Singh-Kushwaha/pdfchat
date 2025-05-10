@@ -42,3 +42,6 @@ A full-stack application that allows users to upload PDF documents and ask quest
 ### Interactivity:
 - Implement feedback mechanisms while uploading documents and processing questions.
 - Display error messages for unsupported file types or processing errors.
+
+## Demo
+<div style="position: relative; padding-bottom: NaN%; height: 0;"><iframe src="https://www.loom.com/embed/ad7d7412b5f2437f8dabfaa8e43da9c0?sid=8668693e-5b2d-4a28-841d-c13fd65c8de8" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>

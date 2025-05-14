@@ -3,6 +3,12 @@
 ## Objective:
 A full-stack application that allows users to upload PDF documents and ask questions regarding the content of these documents. The backend will process these documents and utilize natural language processing to provide answers to the questions posed by the users.
 
+#### Demo Video  - [Watch on Loom](https://www.loom.com/share/ad7d7412b5f2437f8dabfaa8e43da9c0)
+#### Live Link : https://pdfchat-ui.vercel.app/ 
+> [!NOTE]
+> Backend Intial Load can take time upto 30s causing error to actions on frontend, since backend is deployed on **Render Free Tier**, which sleeps upon inactivity.
+> So please retry again 
+
 ## Tools and Technologies:
 - Backend: FastAPI
 - NLP Processing: LLamaIndex
@@ -10,7 +16,7 @@ A full-stack application that allows users to upload PDF documents and ask quest
 - Database: PostgreSQL + pgVector
 - File Storage: Local filesystem 
 
-## Functional Requirements:
+## Functional Specification:
 ### PDF Upload:
 - Users can upload PDF documents to the application.
 - The application stores the PDF and possibly extracts and stores its text content for further processing.
@@ -43,5 +49,7 @@ A full-stack application that allows users to upload PDF documents and ask quest
 - Implement feedback mechanisms while uploading documents and processing questions.
 - Display error messages for unsupported file types or processing errors.
 
-## Demo
-<div style="position: relative; padding-bottom: NaN%; height: 0;"><iframe src="https://www.loom.com/embed/ad7d7412b5f2437f8dabfaa8e43da9c0?sid=8668693e-5b2d-4a28-841d-c13fd65c8de8" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+## Documentations
+- [API Documentation](docs/API_Documentation.md)
+- [Code Documentation](docs/Source_Code_Documentation.md)
+- [Approach Documentation](docs/HLD_LLD_Documentation.md)

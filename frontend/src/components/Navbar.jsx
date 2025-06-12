@@ -1,7 +1,7 @@
 import { Box, AppBar, Toolbar, Button, Typography, Paper, useMediaQuery, useTheme } from '@mui/material'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile'
-import aiPlanetLogo from '../assets/aiplanet_logo.png'
+import pdfChat_Banner from '../assets/pdfChat_banner.png'
 
 const Navbar = ({ uploadedFile, onUploadClick, isMobile }) => {
   const truncateFilename = (filename, maxLength = 20) => {
@@ -28,8 +28,8 @@ const Navbar = ({ uploadedFile, onUploadClick, isMobile }) => {
         px: { xs: 2, sm: 3 }
       }}>
         <img 
-          src={aiPlanetLogo} 
-          alt="AI Planet Logo" 
+          src={pdfChat_Banner} 
+          alt="PDF Chat Banner" 
           style={{ 
             height: isMobile ? '41px' : '44px',
             objectFit: 'contain'

@@ -1,5 +1,5 @@
 import { Box, Avatar } from '@mui/material'
-import aiPlanetAvatar from '../../assets/aiplanet_avatar.png'
+import pdfChat_logo from '../../assets/pdfChat_logo.png'
 import ChatLoaderAnimation from '../../assets/chat_loader.gif'
 
 const ChatMessage = ({ 
@@ -14,7 +14,7 @@ const ChatMessage = ({
       }}
     >
       <Avatar
-        src={isUser ? null : aiPlanetAvatar}
+        src={isUser ? null : pdfChat_logo}
         sx={{ 
           width: 32, 
           height: 32,
